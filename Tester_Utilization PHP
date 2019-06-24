@@ -1,0 +1,43 @@
+<html>
+<form action = "input_form.php" method = "post">
+	<p>
+	<input type = "submit" name "test" value="Input New Data" />
+	</p>
+</form>
+<form action = "homepage.php" method = "post">
+	<p>
+	<input type = "submit" name "test3" value="Return to Homepage" />
+	</p>
+</form>
+<form action = "filtered_view.php" method = "post">
+	<p>
+	<input type = "submit" name "test4" value="Enable Filtered View" />
+	</p>
+</form>
+</html>
+
+<?php
+require ('connect.php');
+
+$query = "SELECT * FROM report";
+$response = mysqli_query($dbc,$query);
+echo '<tr><td><b>FR Report for Guzik Testers</b></td></tr>';
+if ($response)
+{
+echo '<table alight="left cellspacing="5" cellpadding="8" border ="1">';
+echo '<tr><td>Tester</TD><td>EWR</TD><td>Test</TD><td>Date</TD><td>Input</TD><td>High MR</TD><td>Low MR</TD><td>TD Issue</TD>
+		<td>Error</TD><td>Low SER</TD><td>FR</TD><td>Issues</TD><td>Countermeasure</TD><td>Reason</TD><td>In Charge</TD><td>Edit</TD></tr>';
+		//<td>Delete</TD></tr>';
+while($row = mysqli_fetch_array($response))
+	{
+		echo '<tr><td>'.$row['Tester'].'</td><td>'.$row['EWR'].'</td><td>'.$row['Test'].'</td><td>'.$row['Date'].'</td>
+		<td>'.$row['Input'].'</td><td>'.$row['High MR'].'</td><td>'.$row['Low MR'].'</td><td>'.$row['TD Issue'].'</td>
+		<td>'.$row['Error'].'</td><td>'.$row['Low SER'].'</td><td>'.$row['FR'].'</td><td>'.$row['Issues'].'</td>
+		<td>'.$row['Countermeasure'].'</td><td>'.$row['Reason'].'</td><td>'.$row['In Charge'].'</td>
+		<td><a href = "edit_row.php?id='.$row['ID'].'">EDIT</a></td>';
+		//<td><a href = "delete_row.php?id='.$row['ID'].'">Delete Row</a></td></tr>';
+	}
+}
+echo '</table>';
+
+?>
